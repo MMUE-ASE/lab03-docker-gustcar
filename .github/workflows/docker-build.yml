@@ -1,0 +1,51 @@
+name: "Lab 3 — Docker Build Verification"
+
+on:
+  push:
+    paths:
+      - "Dockerfile"
+      - ".dockerignore"
+      - "src/**"
+      - "inc/**"
+      - "startup/**"
+      - "linker/**"
+      - "Makefile"
+      - ".github/workflows/docker-build.yml"
+
+jobs:
+  docker-build:
+    name: Build image and compile firmware inside it
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # Step 1 — Build the student's image. Passes once the Dockerfile (Phase 2) is done.
+      - name: Build Docker image
+        run: docker build -t lab3-arm-builder .
+
+      # Step 2 — Compile the carried-forward Lab 2 project INSIDE the image, exactly as a
+      #          student does locally: bind-mount the repo onto /work and run make.
+      #          Passes once the Lab 2 project has been copied in (scripts/copy_lab2.sh).
+      - name: Compile firmware inside the container
+        run: |
+          docker run --rm \
+            -e EXTRA_CFLAGS="-Werror=implicit-function-declaration -Werror=return-type -Werror=incompatible-pointer-types" \
+            -v "${{ github.workspace }}":/work \
+            lab3-arm-builder make all
+
+      - name: Verify artifacts
+        run: |
+          test -f output/lab2.elf
+          test -f output/lab2.bin
+          test -f output/lab2.hex
+
+      - name: Size report
+        run: docker run --rm -v "${{ github.workspace }}":/work lab3-arm-builder make size
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: firmware-lab3
+          path: output/

@@ -1,0 +1,42 @@
+// Lab 3 — Optional Phase 4: Dev Container
+//
+// A dev container reuses the SAME Dockerfile you wrote, but instead of building the
+// firmware with one-off `docker run` commands, VS Code opens *inside* the container.
+// Your editor, terminal, and IntelliSense all run in the toolchain environment — no
+// "is the toolchain installed?" ever again.
+//
+// To use it: Command Palette -> "Dev Containers: Reopen in Container".
+// (Requires the "Dev Containers" extension, ms-vscode-remote.remote-containers.)
+//
+// This file is JSONC — // comments are allowed. Complete DC1 and DC2.
+{
+  "name": "Lab 3 — ARM Builder",
+
+  // DC1 — Point the dev container at the Dockerfile you authored in Phase 2.
+  //        The path is relative to THIS .devcontainer/ folder.
+  //        Hint: the Dockerfile is one level up, so "../Dockerfile".
+  //        ("context": ".." is provided — it makes the project root the build context.)
+  "build": {
+    "dockerfile": "", // <-- fill in the path to your Dockerfile
+    "context": ".."
+  },
+
+  // DC2 — Open VS Code in the same working directory the image uses (WORKDIR /work).
+  //        This must match the WORKDIR you set in the Dockerfile (D4).
+  "workspaceFolder": "", // <-- e.g. "/work"
+  "workspaceMount": "source=${localWorkspaceFolder},target=/work,type=bind,consistency=cached",
+
+  // Provided — recommend the C/C++ and debug extensions inside the container.
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-vscode.cpptools",
+        "ms-vscode.cpptools-extension-pack",
+        "marus25.cortex-debug"
+      ]
+    }
+  }
+
+  // Note: flashing/debugging the board still happens on the HOST (the container has no
+  // USB access). Build inside the dev container; flash with scripts/flash.sh outside it.
+}

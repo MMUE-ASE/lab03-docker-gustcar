@@ -1,0 +1,20 @@
+{
+  "configurations": [
+    {
+      "name": "STM32F412ZG",
+      "includePath": [
+        "${workspaceFolder}/inc"
+      ],
+      "compilerPath": "arm-none-eabi-gcc",
+      "compilerArgs": [
+        "-mcpu=cortex-m4",
+        "-mthumb",
+        "-mfloat-abi=soft",
+        "-ffreestanding"
+      ],
+      "cStandard": "c11",
+      "intelliSenseMode": "gcc-arm"
+    }
+  ],
+  "version": 4
+}

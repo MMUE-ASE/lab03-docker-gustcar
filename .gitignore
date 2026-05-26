@@ -1,0 +1,11 @@
+# Build artifacts (produced inside the container, land on the host via the mount)
+output/
+*.o
+*.elf
+*.bin
+*.hex
+*.map
+*.d
+
+# Local environment
+.env.local

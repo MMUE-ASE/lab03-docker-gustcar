@@ -1,0 +1,22 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Debug (OpenOCD + ST-LINK)",
+      "type": "cortex-debug",
+      "request": "launch",
+      "servertype": "openocd",
+      "configFiles": [
+        "interface/stlink.cfg",
+        "debug/openocd-connect.cfg",
+        "target/stm32f4x.cfg"
+      ],
+      "executable": "${workspaceFolder}/output/lab2.elf",
+      "cwd": "${workspaceFolder}",
+      "preLaunchTask": "docker: compile firmware",
+      "runToEntryPoint": "main",
+      "showDevDebugOutput": "none",
+      "svdFile": "${workspaceFolder}/debug/STM32F412.svd"
+    }
+  ]
+}

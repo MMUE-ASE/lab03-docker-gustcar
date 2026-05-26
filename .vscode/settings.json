@@ -1,0 +1,11 @@
+{
+  // This project is opened via the VS Code WSL connection — the integrated terminal
+  // already runs inside WSL, where `docker`, `make`, and the toolchain live.
+  "files.associations": {
+    "*.h": "c",
+    "*.s": "arm"
+  },
+  "editor.formatOnSave": false,
+  "C_Cpp.default.compilerPath": "arm-none-eabi-gcc",
+  "C_Cpp.default.intelliSenseMode": "gcc-arm"
+}
